@@ -1,29 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    
+    const result = await signIn('credentials', {
+      email: formData.get('email'),
+      password: formData.get('password'),
+      redirect: true,
+      callbackUrl: '/'
     });
-
-    if (res.ok) {
-      // Redirect to home page after successful login
-      window.location.href = "/"; // Change to your desired route
-    } else {
-      // Handle login error (e.g., show an error message)
-      const errorData = await res.json();
-      alert(errorData.error || "Login failed. Please try again.");
-    }
   };
 
   return (
