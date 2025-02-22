@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 
+interface RouteParams {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
 // Use the built-in Next.js types for API routes
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: RouteParams
 ): Promise<NextResponse> {
   try {
     const translation = await prisma.translation.delete({
