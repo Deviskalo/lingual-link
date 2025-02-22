@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Translation {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  sourceText     String
+  translatedText String
+  sourceLang     String
+  targetLang     String
+  type           String // 'text' | 'document' | 'speech'
+  fileName       String?
+  createdAt      DateTime @default(now())
+  userId         String?  @db.ObjectId // Foreign key to User model
+  user           User?    @relation(fields: [userId], references: [id]) // Relation to User
+}
+
+model Language {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  code       String @unique
+  name       String
+  nativeName String
+}
+
+model Post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  name         String?
+  email        String        @unique
+  password     String
+  translations Translation[]
+}
