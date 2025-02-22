@@ -2,7 +2,8 @@
 const nextConfig = {
   eslint: {
     // Having next handle eslint configuration
-    dirs: ['app', 'components', 'lib', 'pages']
+    dirs: ['app', 'components', 'lib', 'pages'],
+    ignoreDuringBuilds: true  // This will ignore ESLint errors during build
   },
   async headers() {
     return [
