@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 
-interface RouteContext {
-  params: {
-    id: string;
-  };
-}
+// Use the built-in Next.js types for API routes
+type Props = {
+  params: { id: string };
+};
 
-export async function DELETE(request: NextRequest, { params }: RouteContext) {
+export async function DELETE(_request: NextRequest, props: Props) {
   try {
     await prisma.translation.delete({
       where: {
-        id: params.id,
+        id: props.params.id,
       },
     });
 
