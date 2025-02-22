@@ -6,6 +6,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import React from "react";
 import SessionWrapper from "../components/SessionWrapper";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,18 +28,20 @@ export default function RootLayout({
       <body
         className={`${inter.className} antialiased min-h-screen flex flex-col`}
       >
-        <SessionWrapper>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NavBar />
-            <main className="flex-grow mb-10">{children}</main>
-            <Footer />
-          </ThemeProvider>
-        </SessionWrapper>
+        <Providers>
+          <SessionWrapper>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <NavBar />
+              <main className="flex-grow mb-10">{children}</main>
+              <Footer />
+            </ThemeProvider>
+          </SessionWrapper>
+        </Providers>
       </body>
     </html>
   );
