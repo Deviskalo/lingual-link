@@ -3,12 +3,12 @@ import { prisma } from "@/app/lib/prisma"
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     await prisma.translation.delete({
       where: {
-        id: params.id
+        id: context.params.id
       }
     })
     
