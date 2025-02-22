@@ -173,4 +173,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Dev Iskalo - [@dev_iskalo](https://twitter.com/@dev_iskalo)
 
-Project Link: [https://github.com/Deviskalo/ai-translator](https://github.com/Deviskalo/lingual-link)
+Project Link: [https://github.com/Deviskalo/lingual-link](https://github.com/Deviskalo/lingual-link)

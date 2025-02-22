@@ -28,20 +28,20 @@ export default function RootLayout({
       <body
         className={`${inter.className} antialiased min-h-screen flex flex-col`}
       >
-        <Providers>
-          <SessionWrapper>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>
+            <SessionWrapper>
               <NavBar />
               <main className="flex-grow mb-10">{children}</main>
               <Footer />
-            </ThemeProvider>
-          </SessionWrapper>
-        </Providers>
+            </SessionWrapper>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );
