@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
-import { Libre_Franklin } from "next/font/google";
+import { Libre_Franklin as Inter } from "next/font/google";
+import { ThemeProvider } from "../components/theme-provider";
+import { NavBar } from "../components/nav-bar";
+import { Footer } from "../components/footer";
 import "./globals.css";
+import type { Metadata } from "next";
+import React from "react";
+// import SessionWrapper from "../components/SessionWrapper";
 
-const libre_franklin = Libre_Franklin({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LingualLink | AI Language Translator",
@@ -14,13 +16,29 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${libre_franklin.variable} antialiased`}>
-        {children}
+      <head>
+        <meta name="color-scheme" content="light dark" />
+      </head>
+      <body
+        className={`${inter.className} antialiased min-h-screen flex flex-col`}
+      >
+        {/* <SessionWrapper> */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NavBar />
+          <main className="flex-grow mb-10">{children}</main>
+          <Footer />
+        </ThemeProvider>
+        {/* </SessionWrapper> */}
       </body>
     </html>
   );
