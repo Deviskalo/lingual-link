@@ -7,11 +7,18 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ): Promise<NextResponse> {
   try {
-    await prisma.translation.delete({
+    const translation = await prisma.translation.delete({
       where: {
         id: params.id,
       },
     });
+
+    if (!translation) {
+      return NextResponse.json(
+        { error: "Translation not found" },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
