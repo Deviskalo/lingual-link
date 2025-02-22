@@ -1,34 +1,30 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 
-interface RouteParams {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-// Use the built-in Next.js types for API routes
+// Delete translation based on route param id
 export async function DELETE(
   request: NextRequest,
-  { params }: RouteParams
-): Promise<NextResponse> {
+  context: { params: { id: string } }
+) {
   try {
+    // Ensure the route param is extracted properly
+    const { id } = context.params;
+
+    // Proceed with deleting the translation
     const translation = await prisma.translation.delete({
-      where: {
-        id: params.id,
-      },
+      where: { id },
     });
 
+    // If no translation found, return 404
     if (!translation) {
-      return NextResponse.json(
-        { error: "Translation not found" },
-        { status: 404 }
-      );
+      return Response.json({ error: "Translation not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true });
+    // Success response
+    return Response.json({ success: true });
   } catch (error) {
     console.error("Delete error:", error);
-    return NextResponse.json(
+    return Response.json(
       { error: "Failed to delete translation" },
       { status: 500 }
     );
