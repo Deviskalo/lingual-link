@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { MobileMenu } from "./mobile-menu";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { useSession, signOut } from "next-auth/react";
 
 export function NavBar() {
   const pathname = usePathname();
@@ -14,6 +15,7 @@ export function NavBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -107,12 +109,23 @@ export function NavBar() {
             </div>
             <div className="flex items-center space-x-4">
               <ThemeToggle />
-              <Link
-                href="/login"
-                className="p-2 font-thin rounded bg-blue-500 text-white"
-              >
-                Login
-              </Link>
+              <div>
+                {session?.user ? (
+                  <button
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  >
+                    Sign Out
+                  </button>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  >
+                    Login
+                  </Link>
+                )}
+              </div>
               <button
                 onClick={toggleMenu}
                 className="p-2 md:hidden text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"

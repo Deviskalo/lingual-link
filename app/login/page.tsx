@@ -10,12 +10,12 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    
-    const result = await signIn('credentials', {
-      email: formData.get('email'),
-      password: formData.get('password'),
+
+    await signIn("credentials", {
+      email: formData.get("email"),
+      password: formData.get("password"),
       redirect: true,
-      callbackUrl: '/'
+      callbackUrl: "/",
     });
   };
 
