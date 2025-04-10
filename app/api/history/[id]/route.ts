@@ -23,7 +23,7 @@ export async function DELETE(
     }
 
     // Success response
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ message: `Deleted item with id: ${params.id}` });
   } catch (error) {
     console.error("Delete error:", error);
     return NextResponse.json(
